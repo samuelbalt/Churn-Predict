@@ -1,7 +1,6 @@
 ---
 title: 'Relatório: Identificação de evasão de clientes'
 author: "Samuel Gonçalves"
-date: "20/11/2021"
 output: html_document
 ---
 
@@ -9,18 +8,11 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-No presente relatório, realizamos uma investigação estatística no **dataset** fornecido pela companhia de consultoria em inteligência artificial **DHAUZ**, visando identificar padrões de comportamentos de clientes relacionados ao **churn**, isto é, a evasão ou desistência da utilização dos serviços da empresa.
 
-```{r cars}
-summary(cars)
-```
+## Introdução
+Na meio empresarial, o **costumer churn** (literalmente, "mistura de clientes") ou simplesmente **churn** é uma expressão que indica a evasão ou desistência de clientes com relação à algum serviço ou contrato firmado com a empresa. A análise do churn é crítico para mercados de serviços de assinatura ou de longa duração como assinaturas de planos de celular, **streamings**. assinatura de canais de TV, **internet**, etc.
+  
+No presente relatório, realizamos uma investigação estatística no **dataset** fornecido pela companhia de consultoria em inteligência artificial **DHAUZ**, visando identificar padrões de comportamentos de clientes relacionados ao **churn** e construir um modelo que permita prever quais clientes poderão desistir do serviço no período seguinte.
 
-## Including Plots
-
-You can also embed plots, for example:
-
-```{r pressure, echo=FALSE}
-plot(pressure)
-```
-
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+## Dados
+  
