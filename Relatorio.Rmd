@@ -4,11 +4,7 @@ author: "Samuel Gonçalves"
 output: html_document
 ---
 
-knit: (function(input_file, encoding) {
-  out_dir <- 'docs';
-  rmarkdown::render(input_file,
- encoding=encoding,
- output_file=file.path(dirname(input_file), out_dir, 'index.html'))})
+
 
 ## Introdução
 Na meio empresarial, o *costumer churn* (literalmente, "mistura de clientes") ou simplesmente *churn* é uma expressão que indica a evasão ou desistência de clientes com relação à algum serviço ou contrato firmado com a empresa. A análise do churn é crítico para mercados de serviços de assinatura ou de longa duração como assinaturas de planos de celular, *streamings*. assinatura de canais de TV, *internet*, etc.
