@@ -340,25 +340,25 @@ Para isso, desenvolveremos 3 modelos baseados em métodos para classificação b
 <p>Os 3 modelos foram treinados considerando 80% das observações, e como as classes de <strong>churn</strong> e ausência de <strong>churn</strong> estão balanceadas (48,08% de <em>churn</em>), nenhum procedimento de <em>data augmentation</em> foi necessário.</p>
 <pre><code>## [1] &quot;Regressão Logística:&quot;</code></pre>
 <pre><code>##       Accuracy    Sensitivity    Specificity Pos Pred Value Neg Pred Value 
-##      0.5338569      0.5400623      0.5164742      0.7577938      0.2861601</code></pre>
+##      0.5342273      0.5383307      0.5225328      0.7626542      0.2842514</code></pre>
 <pre><code>## [1] &quot;Análise Discriminante:&quot;</code></pre>
 <pre><code>##       Accuracy    Sensitivity    Specificity Pos Pred Value Neg Pred Value 
-##      0.5339310      0.5400763      0.5166573      0.7584991      0.2855360</code></pre>
+##      0.5334864      0.5376945      0.5213256      0.7644974      0.2806827</code></pre>
 <pre><code>## [1] &quot;Random Forest:&quot;</code></pre>
 <pre><code>##       Accuracy    Sensitivity    Specificity Pos Pred Value Neg Pred Value 
-##      0.5597866      0.5797747      0.5370106      0.5879532      0.5286316</code></pre>
+##      0.5654912      0.5824542      0.5460756      0.5949241      0.5332816</code></pre>
 <p>Conseguimos observar que os 3 modelos preliminares tem desempenhos parecidos na acurácia e sensibilidades (capacidade de detectar verdadeiros positivos, isto é, detectar clientes que de fato abandonarão o serviço), porém, a regressão logística e a análise discriminante têm maiores valores do valor predito positivo, isto é, a probabilidade do cliente de fato realizar <em>churn</em> se o modelo prever que que isto acontecerá. Ou seja, clientes detectados como possíveis evasores pelos dois primeiros modelos tem cerca de 77% de chance de cometerem <em>churn</em> de fato, logo, estes clientes merecem atenção espcial pelos setores responsáveis a fim de evitar a evasão.<br />
 Estes modelos então, principalmente os dois primeiros, nos dão direções iniciais para a construção de modelos de aprendizado de máquina mais robustos para a detecção de clientes evasores, servindo como auxílio para a tomada de decisão e elaboração de estratégias de retenção.<br />
 Adicionalmente, a regressão logística nos permite observar quais características são mais determinantes para a evasão dos clientes. Através do teste-z, podemos testar e inferir de cada uma das variáveis do modelo e através do sinal, podemos ver em que “direção” cada variável age no processo de evasão.<br />
 Analisando então a saída da regressão logística:</p>
-<pre><code>##                    Estimate   Std. Error     z value     Pr(&gt;|z|)
-## (Intercept)    0.1616418867 0.0296992344   5.4426281 5.250019e-08
-## change_mou    -0.0007269013 0.0001211155  -6.0017209 1.952371e-09
-## change_rev     0.0022818567 0.0005258811   4.3391110 1.430602e-05
-## rate_call     -0.5403760320 0.0358891655 -15.0568013 3.114981e-51
-## custcare_Mean -0.0130502801 0.0025020352  -5.2158658 1.829606e-07
-## months         0.0088525573 0.0009057051   9.7742156 1.452782e-22
-## kid11_15Y     -0.0175801556 0.0294946835  -0.5960449 5.511452e-01</code></pre>
+<pre><code>##                    Estimate   Std. Error    z value     Pr(&gt;|z|)
+## (Intercept)    0.1825033713 0.0296925657   6.146433 7.924467e-10
+## change_mou    -0.0009011693 0.0001212185  -7.434257 1.051577e-13
+## change_rev     0.0021439993 0.0005249047   4.084550 4.416240e-05
+## rate_call     -0.5549779488 0.0358804379 -15.467424 5.756484e-54
+## custcare_Mean -0.0123076769 0.0024787854  -4.965205 6.862868e-07
+## months         0.0083524280 0.0009078426   9.200304 3.569389e-20
+## kid11_15Y     -0.0271926153 0.0296012696  -0.918630 3.582891e-01</code></pre>
 <p>Ao nível de confiança <span class="math inline">\(1-\alpha = 0.95\%\)</span> de confiança, vemos que com exceção da variável <strong>kid11_15Y</strong> todas as variáveis do modelo são significantes para a ocorrência do <em>churn</em>, ou seja, a presença de adolescentes de 11 a 15 anos na residência não é um fator significativo para a evasão de clientes.<br />
 Porém, as variáveis <strong>change_mou</strong>, <strong>change_rev</strong>, <strong>rate_call</strong>, <strong>custcare_Mean</strong> e <strong>months</strong> são estatísticamente significativas. Assim, um decréscimo no uso do serviço (comparado aos últimos 3 meses), um aumento nas despesas do serviço, menores taxas de sucesso na realização das chamadas para clientes nais antigos são estes sim determinantes para o <em>churn</em> do cliente. Logo, deve-se ter atenção com clientes antigos que apresentam decréscimo no uso do serviço, acréscimo nas despesas com sua utilização e tem baixa taxa de sucesso na realização das chamadas.</p>
 </div>
