@@ -1,7 +1,7 @@
 ---
 title: 'Relatório: Identificação de evasão de clientes'
 author: "Samuel Gonçalves"
-output: rmarkdown::github_document
+output: html_document
 ---
 
 ```{r setup, include=FALSE}
@@ -10,26 +10,26 @@ knitr::opts_chunk$set(echo = TRUE)
 
 
 ## Introdução
-Na meio empresarial, o **costumer churn** (literalmente, "mistura de clientes") ou simplesmente **churn** é uma expressão que indica a evasão ou desistência de clientes com relação à algum serviço ou contrato firmado com a empresa. A análise do churn é crítico para mercados de serviços de assinatura ou de longa duração como assinaturas de planos de celular, **streamings**. assinatura de canais de TV, **internet**, etc.
+Na meio empresarial, o *costumer churn* (literalmente, "mistura de clientes") ou simplesmente *churn* é uma expressão que indica a evasão ou desistência de clientes com relação à algum serviço ou contrato firmado com a empresa. A análise do churn é crítico para mercados de serviços de assinatura ou de longa duração como assinaturas de planos de celular, *streamings*. assinatura de canais de TV, *internet*, etc.
   
-O **churn** pode acontecer de forma voluntária (o próprio consumidor decide livremente sair do serviço) ou involutária (por motivos de força maior, o consumidor precisa cancelar o serviço). Autores apontam que o **churn** é um indicador atrasado, isto é, apenas indica uma perca já anteriormente ocorrida, pois a evasão de clientes é resultado de uma série de acontecimentos prévios no uso do serviço ou no relacionamento com a empresa. Sendo necessário portanto, antecipar-se à perda identificando suas métricas antecedentes (**red flags**). Essas métricas ajudam a identificar quando um cliente está prestes a interromper o serviço antes de realmente parar e auxiliam na tomada da melhor decisão no caso.
+O *churn* pode acontecer de forma voluntária (o próprio consumidor decide livremente sair do serviço) ou involutária (por motivos de força maior, o consumidor precisa cancelar o serviço). Autores apontam que o *churn* é um indicador atrasado, isto é, apenas indica uma perca já anteriormente ocorrida, pois a evasão de clientes é resultado de uma série de acontecimentos prévios no uso do serviço ou no relacionamento com a empresa. Sendo necessário portanto, antecipar-se à perda identificando suas métricas antecedentes (*red flags*). Essas métricas ajudam a identificar quando um cliente está prestes a interromper o serviço antes de realmente parar e auxiliam na tomada da melhor decisão no caso.
   
-Algumas indicadores antecedentes de **churn**:
+Algumas indicadores antecedentes de *churn*:
   
 * Diminuição do uso do serviço e engajamento do cliente.
 * Preços não-competitivos em relação à concorrência.
 * Avaliações e reclamações negativas dos atuais clientes
 
 
-No presente relatório, realizamos uma investigação estatística preliminar no **dataset** fornecido pela companhia de consultoria em inteligência artificial **DHAUZ** utilizando uma metodologia inspirada no processo CRISP-DM (Shearer, 2000) e utilizando modelos estatísticos e de aprendizado de máquina, visando identificar padrões de comportamentos de clientes relacionados ao **churn** e construir um modelo que permita prever quais clientes poderão desistir do serviço no período seguinte.
+No presente relatório, realizamos uma investigação estatística preliminar no *dataset* fornecido pela companhia de consultoria em inteligência artificial *DHAUZ* utilizando uma metodologia inspirada no processo CRISP-DM (Shearer, 2000) e utilizando modelos estatísticos e de aprendizado de máquina, visando identificar padrões de comportamentos de clientes relacionados ao *churn* e construir um modelo que permita prever quais clientes poderão desistir do serviço no período seguinte.
 
 ## Dados
 
-No **case** tratado nesse relatório, investigaremos os dados de uma empresa do setor de Telecomunicações e sua tarefa em busca de **insights** que ajudem a companhia a se antecipar aos **churns** e evitar a evasão dos clientes. A base está disponível [aqui](https://dhauz-challenges.s3.amazonaws.com/churn_challenge.zip) e trata-se do comportamento de clientes de uma companhia de telecomunicações. O **dataset** consiste de 100.00 observações com de 171 variáveis, sendo uma delas, a indicação se o cliente continuou ou não com o serviço. As variáveis do **dataset** foram divididas por Neslin et. al. (2004) em 3 categorias principais:
+No *case* tratado nesse relatório, investigaremos os dados de uma empresa do setor de Telecomunicações e sua tarefa em busca de *insights* que ajudem a companhia a se antecipar aos *churns* e evitar a evasão dos clientes. A base está disponível [aqui](https://dhauz-challenges.s3.amazonaws.com/churn_challenge.zip) e trata-se do comportamento de clientes de uma companhia de telecomunicações. O *dataset* consiste de 100.00 observações com de 171 variáveis, sendo uma delas, a indicação se o cliente continuou ou não com o serviço. As variáveis do *dataset* foram divididas por Neslin et. al. (2004) em 3 categorias principais:
   
-* *Comportamento do Consumidor*: Variáveis que dizem respeito ao uso do serviço do consumidor como minutos de uso, como minutos de uso do serviço, preço mensal pago pelo serviço, etc..  
-* *Interação pela companhia*: Váriaveis que dizem respeito à interação consumidor-empresa, como número de chamadas ao serviço de atendimento ao consumidor, etc.
-* *Dados demográficos*: Variáveis com características demográficas dos consumidores como 
+* **Comportamento do Consumidor**: Variáveis que dizem respeito ao uso do serviço do consumidor como minutos de uso, como minutos de uso do serviço, preço mensal pago pelo serviço, etc..  
+* **Interação pela companhia**: Váriaveis que dizem respeito à interação consumidor-empresa, como número de chamadas ao serviço de atendimento ao consumidor, etc.
+* **Dados demográficos**: Variáveis com características demográficas dos consumidores como 
 
 Dentre as variáveis presentes no dataset, vale destacar:
   
@@ -48,11 +48,23 @@ Variáveis estas que foram escolhidas devido à baixa quantidade de dados faltan
   
 * As variáveis **change_mou** e **change_rev** indicam a variação do uso do serviço pelo cliente. Diminuição do uso do serviço é uma conhecida **redflag** relacionada aos **churns**.  
 * As variáveis **attempted_Mean** e **completed_Mean** são indicadores da satisfação do cliente com o serviço. Visto que uma menor razão de chamadas completadas é forte indicador de insatisfação do cliente e portanto, maior probabilidade de evasão.
-* 
+* A variável **custcare_Mean** indica o número médio de chamadas do cliente ao Serviço de Atendimento ao Consumidor. Maior número de chamadas de chamadas ao serviço de atendimento pode indicar mais problemas na utilização do serviço e mais insatisfação por parte do cliente.
+* A variável **months** descreve há de meses que o serviço é oferecido. Um maior número de meses pode ser relacionado a um maior "desgaste" na relação cliente-empresa e surgimento de opções mais atraentes na concorrência.
 * A variável **kid11_15** indica se há crianças entre 11 e 15 anos presente na residência. Considerando que está é a idade média em que crianças começam a utilizar smartphones próprios, a presença de um novo potencial usuário na residência pode exigir alterações no plano oferecido.
 
 Removendo então o pequeno percentual de observações com dados ausentes (2,68%) e removendo anomalias nos dados (principalmente nas variáveis **change_mou** e **change_rev**), temos então uma análise sumarizada inicial.
 Verificando as variáveis em uma análise sumarizada inicial.
+```{r include=FALSE}
+library(readr)
+churn_challenge_data <- read_csv("data/churn_challenge_data.csv")
+dados <- churn_challenge_data
+X <- cbind.data.frame(dados$churn, dados$change_mou, dados$change_rev, dados$attempt_Mean, dados$complete_Mean, dados$custcare_Mean, 
+                      dados$months, dados$kid11_15)
+colnames(X) <- c('churn', 'change_mou', 'change_rev', 'attempt_Mean', 'complete_Mean', 'custcare_Mean', 'months', 'kid11_15')
+X <- na.omit(X)
+X <- X[X$change_mou>=-100 & X$change_rev>=-100 & X$change_mou<=250 & X$change_rev<=250,]
+```
+
 ```{r echo=FALSE, warning=FALSE}
 summary(X[,-c(1,8)])
 
@@ -78,26 +90,92 @@ summary(X[X$churn==0,-c(1,8)])
 Criamos então uma nova variável **rate_call** que indica a razão de ligações bem-sucedidas realizadas pelo cliente, isto é, a razão das variáveis **complete_Mean** e **attempt_Mean**. Temos assim, sua estatística resumo:
 
 ```{r echo=FALSE}
+X$rate_call <- X$complete_Mean/X$attempt_Mean
+X[is.na(X)] <- 0
 summary(X$rate_call)
 ```
 Obs: Como alguns clientes não realizaram tentativas de ligação no período e a divisão por zero não é possível, fixamos o **rate_call** desses clientes em zero.  
   
-Analisando agora o **rate_call** para clientes evadidos (realizaram **churn**):
-```{r}
+Analisando agora o **rate_call** para clientes evadidos (realizaram *churn*):
+```{r echo=FALSE}
 summary(X$rate_call[X$churn==1])
 ```
-E para os clientes que não realizaram **churn**:
+E para os clientes que não realizaram *churn*:
 ```{r echo=FALSE}
 summary(X$rate_call[X$churn==0])
 ```
-Como esperado, a média de tentativas bem-sucedidas de ligação é menor em clientes que evadiram do serviço. Indicando que este pode ser tomado como indicador de satisfação com o uso do servição e preditor para o **churn** do cliente.
+Como esperado, a média de tentativas bem-sucedidas de ligação é menor em clientes que evadiram do serviço. Indicando que este pode ser tomado como indicador de satisfação com o uso do servição e preditor para o *churn* do cliente.
 
 ## Predição
 Vamos desenvolver agora modelos preditivos preliminares que nos permitam inferir quais clientes podem cancelar o serviço dado seu histórico recente de utilização/relacionamento com a empresa/situação familiar atual.  
-Para isso, desenvolveremos 3 modelos baseados em métodos para classificação binária. São eles **regressão logística**, **análise discriminante** e **Random Forest**. Com isso, desenvolvemos 3 modelos.
+Para isso, desenvolveremos 3 modelos baseados em métodos para classificação binária. São eles a regressão logística, análise discriminante e *Random Forest*. Com isso, desenvolvemos 3 modelos.
 
-* *Regressão Logística*: Com as variáveis preditoras **change_mou**, **change_rev**, **custcare_Mean**, **months**, **rate_call** e **kid11_15** e a função de ligação logística.
-* *Análise Discriminante Linear*: Com as mesmas variáveis preditoras.
-* *Random Forest*: Com as mesmas variáveis preditoras, utilizando 75 árvores de decisão.
+* **Regressão Logística**: Com as variáveis preditoras **change_mou**, **change_rev**, **custcare_Mean**, **months**, **rate_call** e **kid11_15** e a função de ligação logística.
+* **Análise Discriminante Linear**: Com as mesmas variáveis preditoras.
+* **Random Forest**: Com as mesmas variáveis preditoras, utilizando 75 árvores de decisão.
   
-Os 3 modelos foram treinados considerando 80% das observações, e como as classes de **churn** e ausência de **churn** estão balanceadas (48,08% de **churn**), nenhum procedimento de **data augmentation foi necessário.
+Os 3 modelos foram treinados considerando 80% das observações, e como as classes de **churn** e ausência de **churn** estão balanceadas (48,08% de *churn*), nenhum procedimento de *data augmentation* foi necessário.  
+
+```{r include=FALSE}
+library(MASS)
+library(randomForest)
+library(caret)
+
+n_train <- sample(1:nrow(X), 0.8*nrow(X), replace = FALSE)
+X_train <- X[n_train,-c(4,5)]
+X_test <- X[-n_train,-c(4,5)]
+
+logis <- glm(churn ~ change_mou + change_rev + rate_call + custcare_Mean + months + kid11_15, data = X_train, family = binomial())
+
+ld <- lda(churn ~ change_mou + change_rev + rate_call + custcare_Mean + months + kid11_15, data = X_train)
+
+rf <- randomForest(as.factor(churn) ~ change_mou + change_rev + rate_call + custcare_Mean + months + kid11_15, data = X_train, ntree = 50)
+
+
+```
+
+```{r include=FALSE}
+y_logis <- as.numeric(predict(logis, newdata = X_test, type = 'response') > 0.5)
+y_ld <- predict(ld, newdata = X_test[-c(1)])
+y_rf <- predict(rf, X_test[,-1])
+
+p1 <- confusionMatrix(table(as.factor(X_test$churn), y_logis), reference = as.factor('1'))
+p2 <- confusionMatrix(table(as.factor(X_test$churn), y_ld$class), reference = as.factor('1'))
+p3 <- confusionMatrix(table(as.factor(X_test$churn), y_rf), reference = as.factor('1'))
+
+
+
+
+```
+
+
+
+```{r echo=FALSE}
+print('Regressão Logística:')
+
+c(p1$overall[1], p1$byClass[1:4])
+
+print('Análise Discriminante:')
+
+c(p2$overall[1], p2$byClass[1:4])
+
+print('Random Forest:')
+
+c(p3$overall[1], p3$byClass[1:4])
+
+
+```
+
+Conseguimos observar que os 3 modelos preliminares tem desempenhos parecidos na acurácia e sensibilidades (capacidade de detectar verdadeiros positivos, isto é, detectar clientes que de fato abandonarão o serviço), porém, a regressão logística e a análise discriminante têm maiores valores do valor predito positivo, isto é, a probabilidade do cliente de fato realizar *churn* se o modelo prever que que isto acontecerá. Ou seja, clientes detectados como possíveis evasores pelos dois primeiros modelos tem cerca de 77% de chance de cometerem *churn* de fato, logo, estes clientes merecem atenção espcial pelos setores responsáveis a fim de evitar a evasão.  
+Estes modelos então, principalmente os dois primeiros, nos dão  direções iniciais para a construção de modelos de aprendizado de máquina mais robustos para a detecção de clientes evasores, servindo como auxílio para a tomada de decisão e elaboração de estratégias de retenção.  
+Adicionalmente, a regressão logística nos permite observar quais características são mais determinantes para a evasão dos clientes. Através do teste-z, podemos testar e inferir de cada uma das variáveis do modelo e através do sinal, podemos ver em que "direção" cada variável age no processo de evasão.  
+Analisando então a saída da regressão logística:
+```{r echo=FALSE}
+summary(logis)[["coefficients"]]
+```
+Ao nível de confiança $1-\alpha = 0.95\%$ de confiança, vemos que com exceção da variável **kid11_15Y** todas as variáveis do modelo são significantes para a ocorrência do *churn*, ou seja, a presença de adolescentes de 11 a 15 anos na residência não é um fator significativo para a evasão de clientes.  
+Porém, um decréscimo no uso do serviço (comparado aos últimos 3 meses), um aumento nas despesas do serviço, menores taxas de sucesso na realização das chamadas para clientes nais antigos são estes sim determinantes para o *churn* do cliente.
+Logo, deve-se ter atenção com clientes antigos que apresentam decréscimo no uso do serviço, acréscimo nas despesas com sua utilização e tem baixa taxa de sucesso na realização das chamadas.
+
+
+

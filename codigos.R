@@ -1,4 +1,4 @@
-library(DescTools)
+library(MASS)
 library(ggplot2)
 library(magrittr)
 library(caret)
@@ -59,18 +59,19 @@ X_test <- X[-n_train,-c(4,5)]
 
 
 pred <- glm(churn ~ change_mou + change_rev + rate_call + custcare_Mean + months + kid11_15, data = X_train, family = binomial())
-y_pred <- predict(pred, newdata = X_test, type = 'response')
+y_pred <- as.numeric(predict(pred, newdata = X_test, type = 'response') > 0.5)
 
 
 
-roc.curve(X_test$churn, y_rf)
+
+roc.curve(X_test$churn, y_ld$class)
 
 
-p <- confusionMatrix(table(as.factor(X_test$churn), y_rf))
+p2 <- confusionMatrix(table(as.factor(X_test$churn), y_ld$class), reference = as.factor('1'))
 
 
 ld <- lda(churn ~ change_mou + change_rev + rate_call + custcare_Mean + months + kid11_15, data = X_train)
- y_pred <- predict(ld, newdata = X_test[-c(1,4,5)]) 
+y_ld<- predict(ld, newdata = X_test[-c(1)]) 
  
 
 rf <- randomForest(as.factor(churn) ~ change_mou + change_rev + rate_call + custcare_Mean + months + kid11_15, data = X_train, ntree = 50)
