@@ -170,7 +170,6 @@ pre code {
 </div>
 
 
-<p>knit: (function(input_file, encoding) { out_dir &lt;- ‘docs’; rmarkdown::render(input_file, encoding=encoding, output_file=file.path(dirname(input_file), out_dir, ‘index.html’))})</p>
 <div id="introdução" class="section level2">
 <h2>Introdução</h2>
 <p>Na meio empresarial, o <em>costumer churn</em> (literalmente, “mistura de clientes”) ou simplesmente <em>churn</em> é uma expressão que indica a evasão ou desistência de clientes com relação à algum serviço ou contrato firmado com a empresa. A análise do churn é crítico para mercados de serviços de assinatura ou de longa duração como assinaturas de planos de celular, <em>streamings</em>. assinatura de canais de TV, <em>internet</em>, etc.</p>
@@ -340,46 +339,25 @@ Para isso, desenvolveremos 3 modelos baseados em métodos para classificação b
 <p>Os 3 modelos foram treinados considerando 80% das observações, e como as classes de <strong>churn</strong> e ausência de <strong>churn</strong> estão balanceadas (48,08% de <em>churn</em>), nenhum procedimento de <em>data augmentation</em> foi necessário.</p>
 <pre><code>## [1] &quot;Regressão Logística:&quot;</code></pre>
 <pre><code>##       Accuracy    Sensitivity    Specificity Pos Pred Value Neg Pred Value 
-<<<<<<< HEAD
-##      0.5320788      0.5329849      0.5293417      0.7738010      0.2728389</code></pre>
+##      0.5333383      0.5301758      0.5432781      0.7848778      0.2689561</code></pre>
 <pre><code>## [1] &quot;Análise Discriminante:&quot;</code></pre>
 <pre><code>##       Accuracy    Sensitivity    Specificity Pos Pred Value Neg Pred Value 
-##      0.5320788      0.5329265      0.5294999      0.7750895      0.2714571</code></pre>
+##      0.5328938      0.5298420      0.5425401      0.7854561      0.2674366</code></pre>
 <pre><code>## [1] &quot;Random Forest:&quot;</code></pre>
 <pre><code>##       Accuracy    Sensitivity    Specificity Pos Pred Value Neg Pred Value 
-##      0.5691214      0.5800356      0.5562550      0.6064424      0.5290957</code></pre>
-=======
-##      0.5342273      0.5383307      0.5225328      0.7626542      0.2842514</code></pre>
-<pre><code>## [1] &quot;Análise Discriminante:&quot;</code></pre>
-<pre><code>##       Accuracy    Sensitivity    Specificity Pos Pred Value Neg Pred Value 
-##      0.5334864      0.5376945      0.5213256      0.7644974      0.2806827</code></pre>
-<pre><code>## [1] &quot;Random Forest:&quot;</code></pre>
-<pre><code>##       Accuracy    Sensitivity    Specificity Pos Pred Value Neg Pred Value 
-##      0.5654912      0.5824542      0.5460756      0.5949241      0.5332816</code></pre>
->>>>>>> 8b3f82f99678590e631ab57381cedb817ef3cb5f
+##      0.5634909      0.5683972      0.5573689      0.6157294      0.5085853</code></pre>
 <p>Conseguimos observar que os 3 modelos preliminares tem desempenhos parecidos na acurácia e sensibilidades (capacidade de detectar verdadeiros positivos, isto é, detectar clientes que de fato abandonarão o serviço), porém, a regressão logística e a análise discriminante têm maiores valores do valor predito positivo, isto é, a probabilidade do cliente de fato realizar <em>churn</em> se o modelo prever que que isto acontecerá. Ou seja, clientes detectados como possíveis evasores pelos dois primeiros modelos tem cerca de 77% de chance de cometerem <em>churn</em> de fato, logo, estes clientes merecem atenção espcial pelos setores responsáveis a fim de evitar a evasão.<br />
 Estes modelos então, principalmente os dois primeiros, nos dão direções iniciais para a construção de modelos de aprendizado de máquina mais robustos para a detecção de clientes evasores, servindo como auxílio para a tomada de decisão e elaboração de estratégias de retenção.<br />
 Adicionalmente, a regressão logística nos permite observar quais características são mais determinantes para a evasão dos clientes. Através do teste-z, podemos testar e inferir de cada uma das variáveis do modelo e através do sinal, podemos ver em que “direção” cada variável age no processo de evasão.<br />
 Analisando então a saída da regressão logística:</p>
-<<<<<<< HEAD
 <pre><code>##                    Estimate   Std. Error     z value     Pr(&gt;|z|)
-## (Intercept)    0.1825554284 0.0297922853   6.1276074 8.921037e-10
-## change_mou    -0.0008219125 0.0001209328  -6.7964402 1.072358e-11
-## change_rev     0.0021356963 0.0005243377   4.0731317 4.638517e-05
-## rate_call     -0.5519018361 0.0359711405 -15.3429062 3.951027e-53
-## custcare_Mean -0.0141766275 0.0025230855  -5.6187662 1.923259e-08
-## months         0.0079563166 0.0009093159   8.7497828 2.137638e-18
-## kid11_15Y     -0.0147192330 0.0295006465  -0.4989461 6.178173e-01</code></pre>
-=======
-<pre><code>##                    Estimate   Std. Error    z value     Pr(&gt;|z|)
-## (Intercept)    0.1825033713 0.0296925657   6.146433 7.924467e-10
-## change_mou    -0.0009011693 0.0001212185  -7.434257 1.051577e-13
-## change_rev     0.0021439993 0.0005249047   4.084550 4.416240e-05
-## rate_call     -0.5549779488 0.0358804379 -15.467424 5.756484e-54
-## custcare_Mean -0.0123076769 0.0024787854  -4.965205 6.862868e-07
-## months         0.0083524280 0.0009078426   9.200304 3.569389e-20
-## kid11_15Y     -0.0271926153 0.0296012696  -0.918630 3.582891e-01</code></pre>
->>>>>>> 8b3f82f99678590e631ab57381cedb817ef3cb5f
+## (Intercept)    0.1678758949 0.0297303626   5.6466144 1.636383e-08
+## change_mou    -0.0008529252 0.0001211485  -7.0403310 1.917837e-12
+## change_rev     0.0020854223 0.0005252389   3.9704265 7.174408e-05
+## rate_call     -0.5446729037 0.0359511205 -15.1503735 7.533725e-52
+## custcare_Mean -0.0134379106 0.0024978995  -5.3796843 7.461656e-08
+## months         0.0081805661 0.0009075943   9.0134609 1.996542e-19
+## kid11_15Y     -0.0134848605 0.0293929828  -0.4587782 6.463934e-01</code></pre>
 <p>Ao nível de confiança <span class="math inline">\(1-\alpha = 0.95\%\)</span> de confiança, vemos que com exceção da variável <strong>kid11_15Y</strong> todas as variáveis do modelo são significantes para a ocorrência do <em>churn</em>, ou seja, a presença de adolescentes de 11 a 15 anos na residência não é um fator significativo para a evasão de clientes.<br />
 Porém, as variáveis <strong>change_mou</strong>, <strong>change_rev</strong>, <strong>rate_call</strong>, <strong>custcare_Mean</strong> e <strong>months</strong> são estatísticamente significativas. Assim, um decréscimo no uso do serviço (comparado aos últimos 3 meses), um aumento nas despesas do serviço, menores taxas de sucesso na realização das chamadas para clientes nais antigos são estes sim determinantes para o <em>churn</em> do cliente. Logo, deve-se ter atenção com clientes antigos que apresentam decréscimo no uso do serviço, acréscimo nas despesas com sua utilização e tem baixa taxa de sucesso na realização das chamadas.</p>
 </div>
