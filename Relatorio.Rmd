@@ -4,10 +4,11 @@ author: "Samuel Gonçalves"
 output: html_document
 ---
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-```
-
+knit: (function(input_file, encoding) {
+  out_dir <- 'docs';
+  rmarkdown::render(input_file,
+ encoding=encoding,
+ output_file=file.path(dirname(input_file), out_dir, 'index.html'))})
 
 ## Introdução
 Na meio empresarial, o *costumer churn* (literalmente, "mistura de clientes") ou simplesmente *churn* é uma expressão que indica a evasão ou desistência de clientes com relação à algum serviço ou contrato firmado com a empresa. A análise do churn é crítico para mercados de serviços de assinatura ou de longa duração como assinaturas de planos de celular, *streamings*. assinatura de canais de TV, *internet*, etc.
@@ -174,7 +175,7 @@ Analisando então a saída da regressão logística:
 summary(logis)[["coefficients"]]
 ```
 Ao nível de confiança $1-\alpha = 0.95\%$ de confiança, vemos que com exceção da variável **kid11_15Y** todas as variáveis do modelo são significantes para a ocorrência do *churn*, ou seja, a presença de adolescentes de 11 a 15 anos na residência não é um fator significativo para a evasão de clientes.  
-Porém, um decréscimo no uso do serviço (comparado aos últimos 3 meses), um aumento nas despesas do serviço, menores taxas de sucesso na realização das chamadas para clientes nais antigos são estes sim determinantes para o *churn* do cliente.
+Porém, as variáveis **change_mou**, **change_rev**, **rate_call**, **custcare_Mean** e **months** são estatísticamente significativas. Assim, um decréscimo no uso do serviço (comparado aos últimos 3 meses), um aumento nas despesas do serviço, menores taxas de sucesso na realização das chamadas para clientes nais antigos são estes sim determinantes para o *churn* do cliente.
 Logo, deve-se ter atenção com clientes antigos que apresentam decréscimo no uso do serviço, acréscimo nas despesas com sua utilização e tem baixa taxa de sucesso na realização das chamadas.
 
 
